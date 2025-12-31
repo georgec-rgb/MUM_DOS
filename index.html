@@ -247,7 +247,12 @@ fetch("data.json")
       grouped[id].nabl="Yes";
     }
 
-    grouped[id].investigations.add(row.investigation_name);
+    /* ---- 🔧 FIX: Investigation fallback to test name ---- */
+    const inv = (row.investigation_name && row.investigation_name.trim() !== "")
+                  ? row.investigation_name
+                  : row.test_name;
+    grouped[id].investigations.add(inv);
+
     grouped[id].methods.add(row.method_description || row.name);
   });
 
